@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { http, type HealthResponse } from '@/api/http'
+import { http, HttpError, type HealthResponse } from '@/api/http'
 
 const loading = ref(false)
 const health = ref<HealthResponse | null>(null)
@@ -10,11 +10,10 @@ async function loadHealth() {
   loading.value = true
   error.value = ''
   try {
-    const { data } = await http.get<HealthResponse>('/health')
-    health.value = data
+    health.value = await http.get<HealthResponse>('/health', { silent: true })
   } catch (e) {
     health.value = null
-    error.value = e instanceof Error ? e.message : '请求失败，请确认后端已启动'
+    error.value = e instanceof HttpError || e instanceof Error ? e.message : '请求失败，请确认后端已启动'
   } finally {
     loading.value = false
   }
@@ -25,8 +24,8 @@ onMounted(loadHealth)
 
 <template>
   <main class="page">
-    <h1>My Platform</h1>
-    <p class="desc">Vue 3.5 前端 + Java Spring Boot 后端脚手架</p>
+    <h1>InkNote</h1>
+    <p class="desc">Vue 3.5 前端 + Java Spring Boot 后端</p>
 
     <section class="card">
       <div class="row">
