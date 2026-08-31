@@ -1,0 +1,17 @@
+# Local development: file-based H2 (no install needed)
+# Data file: backend/data/inknote.mv.db
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/inknote;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true

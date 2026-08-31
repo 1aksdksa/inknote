@@ -1,0 +1,12 @@
+# Production / server PostgreSQL
+# Override with env vars: DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:inknote}
+    username: ${DB_USER:inknote}
+    password: ${DB_PASSWORD:inknote}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate

@@ -3,4 +3,27 @@ server:
 
 spring:
   application:
-    name: my-platform-backend
+    name: inknote-backend
+  profiles:
+    active: dev
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+inknote:
+  jwt:
+    # Dev only. Override in production via env INKNOTE_JWT_SECRET
+    secret: ${INKNOTE_JWT_SECRET:inknote-dev-secret-change-me-32bytes!!}
+    expire-seconds: ${INKNOTE_JWT_EXPIRE_SECONDS:604800}
+  upload-dir: ${INKNOTE_UPLOAD_DIR:./data/uploads}

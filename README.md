@@ -6,25 +6,22 @@ Markdown 笔记平台：手机也能用的记录与管理工具。
 
 ## 目录
 
-- `frontend/`：Vue 3.5 + Vite + TypeScript + Vue Router + Pinia（开发端口 `5174`）
+- `frontend/`：Vue 3.5 + Vite + TypeScript + Pinia + Tailwind + shadcn-vue（端口 `5174`）
 - `backend/`：Spring Boot 3.4（Java 21），端口 `8080`
+- `docker-compose.yml`：可选 PostgreSQL（需 Docker）
 
-## 环境要求
+## 本地启动
 
-- Node.js 20+
-- JDK 21
-- Maven 3.9+（或使用 IDE 内置 Maven）
-
-## 启动后端
+### 后端
 
 ```bash
 cd backend
 mvn spring-boot:run
 ```
 
-健康检查：`http://localhost:8080/api/health`
+默认使用 H2 文件库：`backend/data/inknote.mv.db`
 
-## 启动前端
+### 前端
 
 ```bash
 cd frontend
@@ -32,14 +29,22 @@ npm install
 npm run dev
 ```
 
-打开：`http://localhost:5174`  
-前端已将 `/api` 代理到 `http://localhost:8080`。
+打开：http://localhost:5174
 
-## 当前能力
+## 已实现
 
-- 前后端项目骨架
-- CORS 与开发代理
-- `/api/health`、`/api/hello` 示例接口
-- 首页连通性检查
+- 注册 / 登录（JWT）
+- 笔记列表、新建、编辑、删除
+- Markdown 编辑 + 预览（手机优先）
+- axios 二次封装（驼峰、统一 `{ code, message, data }`）
+- Tailwind + shadcn-vue Button
 
-下一步计划：登录注册、数据库、Markdown 笔记 CRUD、手机优先布局。
+## 主要接口
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/auth/profile`
+- `POST /api/note/page`
+- `POST /api/note/detail`
+- `POST /api/note/save`
+- `POST /api/note/delete`

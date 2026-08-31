@@ -134,3 +134,48 @@
     @apply text-inherit;
   }
 }
+.markdown-preview :where(h1,h2,h3) {
+  margin: 1rem 0 0.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.markdown-preview h1 { font-size: 1.5rem; }
+.markdown-preview h2 { font-size: 1.25rem; }
+.markdown-preview p { margin: 0.5rem 0; }
+.markdown-preview ul { margin: 0.5rem 0; padding-left: 1.25rem; list-style: disc; }
+.markdown-preview code {
+  border-radius: 0.25rem;
+  background: var(--muted);
+  padding: 0.1rem 0.35rem;
+  font-size: 0.85em;
+}
+.markdown-preview pre {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  background: var(--muted);
+  padding: 0.75rem 1rem;
+}
+.markdown-preview pre code { background: transparent; padding: 0; }
+/* InkNote editor: remove Vditor outer frame + left padding */
+.inknote-vditor.vditor {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
+}
+.inknote-vditor .vditor-content,
+.inknote-vditor .vditor-ir {
+  border: none !important;
+  box-shadow: none !important;
+}
+.inknote-vditor .vditor-ir,
+.inknote-vditor .vditor-wysiwyg,
+.inknote-vditor .vditor-sv {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-top: 0 !important;
+}
+.inknote-vditor .vditor-ir pre.vditor-reset {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

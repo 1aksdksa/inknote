@@ -28,7 +28,8 @@ export interface ApiResult<T = unknown> {
 export interface HealthResponse {
   status: string
   service: string
-  time: string
+  time: number
+  database: string
 }
 
 export class HttpError extends Error {
@@ -113,6 +114,13 @@ function resolveErrorMessage(error: AxiosError<{ message?: string; code?: string
 }
 
 instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const token = localStorage.getItem('inknote_token')
+  if (token) {
+    config.headers.set('Authorization', `Bearer ${token}`)
+  }
+  if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+    config.headers.delete('Content-Type')
+  }
   if (!headerFlag(config, HEADER_DISABLE_CAMEL_CASE)) {
     if (config.params && typeof config.params === 'object') {
       config.params = toSnakeCase(config.params)
@@ -147,6 +155,13 @@ instance.interceptors.response.use(
           silent,
         })
         notifyError(bizError)
+        if (String(response.data.code) === '101001004') {
+          localStorage.removeItem('inknote_token')
+          localStorage.removeItem('inknote_profile')
+          if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/login')) {
+            window.location.assign('/login')
+          }
+        }
         return Promise.reject(bizError)
       }
       response.data = response.data.data
